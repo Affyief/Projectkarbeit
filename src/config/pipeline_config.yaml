@@ -1,0 +1,55 @@
+# Pipeline configuration for dual-camera wire detection
+
+camera:
+  basler:
+    enable: true
+    # If uisng multiple Basler cameras, list serials or indexes here
+    #This project is using a single Basler 1920gm
+  dvxplorer:
+    enable: true
+    serial: "DVXplorer_DXAS0024"
+
+frame:
+  resized_width: 940
+  resized_height: 540
+
+overlay:
+  alpha: 0.5
+  homography_matrix:
+    # This can be loaded from .npy or set here for reproducibility
+    - [0.78174062, -0.07776071, 159.554279]
+    - [-0.00090505, 0.92211160, 15.1813399]
+    - [-0.0000414179, -0.00014566688, 1.0]
+
+wire_detection:
+  thickness: 8
+  spline_points: 100
+  min_contour_area: 500
+
+roi:
+  default_width: 500
+  default_height: 300
+  min_size: 50
+  max_size: 540  # Should match frame size
+  default_center_x: 470
+  default_center_y: 270
+
+thresholds:
+  mask_low: 0
+  mask_high: 130
+
+paths:
+  template_dir: "wire_templates"
+  template_file: "wire_template1.npy"
+  screenshots_dir: "screenshots"
+
+legend:
+  lines:
+    - "Low threshold: q/w"
+    - "High threshold: a/s"
+    - "Width: r/e"
+    - "Height: f/t"
+    - "Move: i/j/k/l"
+    - "Save rect: m | Save wire: g"
+
+# You can add more options as your pipeline grows!
