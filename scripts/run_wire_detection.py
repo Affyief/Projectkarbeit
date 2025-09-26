@@ -14,7 +14,7 @@ Features:
 - Screenshot and template saving
 - Interactive keyboard controls
 
-Author: <Your Name>
+Author: Affyief
 Date: 2025-09-11
 """
 
