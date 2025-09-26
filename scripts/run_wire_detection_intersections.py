@@ -1,5 +1,5 @@
 """
-Basler + DVX Wire Detection Overlay
+Basler + DVX Wire Detection Overlay with additional intersection detection
 
 This script captures frames from a Basler camera and a DVXplorer event camera,
 detects wire contours in a defined region, overlays DVX events onto the Basler
