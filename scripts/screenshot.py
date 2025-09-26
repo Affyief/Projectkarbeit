@@ -23,7 +23,7 @@ Requirements:
     - pypylon
     - dv_processing (DVXplorer Python wrapper)
 
-Author: FAPS
+Author: Affyief
 Date: 2025-09-11
 """
 
