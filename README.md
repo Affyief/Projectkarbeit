@@ -1,5 +1,5 @@
 <img width="1920" height="1080" alt="Screenshot from 2025-09-25 14-41-03" src="https://github.com/user-attachments/assets/dbf83941-b129-4cf6-81cd-7d64adb4d20b" />
-**"Low-Latency Multimodal Perception for Robotic Assembly and Real-Time Inspection of Automotive Wiring Systems using Frame-Based and Event-Based Vision”**
+**Low-Latency Multimodal Perception for Robotic Assembly and Real-Time Inspection of Automotive Wiring Systems using Frame-Based and Event-Based Vision**
 
 A masters research project for **deformable linear object (wire) detection** using two complementary vision sensors:
 - **Basler frame camera** (grayscale, high-resolution frames)
