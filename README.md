@@ -24,7 +24,7 @@ The system combines **AprilTag-based motion ROI detection**, **homography calibr
 **Requirements**
 - Python 3.8+
 - [Basler Pylon SDK](https://www.baslerweb.com/en/products/software/basler-pylon-camera-software-suite/)  
-- [DVXplorer SDK](https://inivation.com/support/software/)  
+- [DVXplorer SDK](https://gitlab.com/inivation/dv/dv-processing)  
 ---
 
 **Core dependencies:**
