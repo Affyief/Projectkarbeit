@@ -1,0 +1,13 @@
+name: wire-detection-env
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.8
+  - numpy
+  - opencv
+  - scipy
+  - pip
+  - pip:
+      - pypylon
+      - dv-processing
