@@ -11,13 +11,13 @@ The system combines **AprilTag-based motion ROI detection**, **homography calibr
 ---
 
 ## Features
-- 📷 **Dual-camera acquisition** (Basler + DVX)
-- 🏷️ **AprilTag ROI & motion detection** inside a defined region
-- 🔄 **Homography calibration** (DVX → Basler alignment using ORB features)
-- 🎥 **Real-time overlay** of event data on frame-based images
-- 🧵 **Spline-based wire detection** from masked regions
-- 💾 **Screenshot saving & ROI cropping** with keyboard shortcuts
-- 🖥️ **Interactive UI** with visualization windows
+- **Dual-camera acquisition** (Basler + DVX)
+- **AprilTag ROI & motion detection** inside a defined region
+- **Homography calibration** (DVX → Basler alignment using ORB features)
+- **Real-time overlay** of event data on frame-based images
+- **Spline-based wire detection** from masked regions
+- **Screenshot saving & ROI cropping** with keyboard shortcuts
+- **Interactive UI** with visualization windows
 
 ---
 
