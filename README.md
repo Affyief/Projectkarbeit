@@ -1,6 +1,5 @@
 ![ezgif-7f6b9b4e4c7d57](https://github.com/user-attachments/assets/124b19ae-de76-40ba-a448-d71e75157342)
 
-<img width="1920" height="1080" alt="Screenshot from 2025-09-25 14-41-03" src="https://github.com/user-attachments/assets/dbf83941-b129-4cf6-81cd-7d64adb4d20b" />
 
 **Low-Latency Multimodal Perception for Robotic Assembly and Real-Time Inspection of Automotive Wiring Systems using Frame-Based and Event-Based Vision**
 
@@ -53,6 +52,7 @@ The system combines **AprilTag-based motion ROI detection**, **homography calibr
 <img width="1920" height="1080" alt="Screenshot from 2025-09-17 15-59-26" src="https://github.com/user-attachments/assets/962e35b1-b202-4db6-ac96-678bb1082214" />
 <img width="1920" height="1080" alt="Screenshot from 2025-09-22 11-39-03" src="https://github.com/user-attachments/assets/de32bea7-a694-46f8-8322-ea059e7f15eb" />
 <img width="1920" height="1080" alt="Screenshot from 2025-09-22 11-41-13" src="https://github.com/user-attachments/assets/3c0941d5-61bd-4c93-8563-e85064289359" />
+<img width="1920" height="1080" alt="Screenshot from 2025-09-25 14-41-03" src="https://github.com/user-attachments/assets/dbf83941-b129-4cf6-81cd-7d64adb4d20b" />
 ---
 
 **License**
