@@ -7,7 +7,7 @@ A masters research project for **deformable linear object (wire) detection** usi
 - **Basler frame camera** (grayscale, high-resolution frames)
 - **iniVation DVXplorer event camera** (asynchronous events, high dynamic range)
 
-The system combines **AprilTag-based motion ROI detection**, **homography calibration**, and **real-time wire tracking** with spline fitting.
+The system combines **AprilTag-based ROI motion detection**, **homography calibration**, and **real-time wire tracking** with spline fitting.
 
 ---
 
