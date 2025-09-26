@@ -54,7 +54,9 @@ The system combines **AprilTag-based motion ROI detection**, **homography calibr
 ---
 
 **License**
+
 This project is licensed under the MIT License. See LICENSE for details.
+
 ---
 
 **Acknowledgements**
