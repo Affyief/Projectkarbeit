@@ -1,3 +1,36 @@
+"""
+Basler + DVX Wire Detection Overlay
+
+This script captures frames from a Basler camera and a DVXplorer event camera,
+detects wire contours in a defined region, overlays DVX events onto the Basler
+image using a homography, computes spline-based wire intersections, compares
+to a saved wire template, and displays a 2x2 master window with all views.
+
+Features:
+- Live Basler and DVX display
+- Overlay of DVX events on Basler frame
+- Wire detection with spline interpolation
+- Intersection highlighting
+- Wire template matching and similarity calculation
+- Adjustable mask rectangle for intensity-based wire detection
+- Screenshot saving of overlay, mask, and cropped wire region
+- Interactive keyboard controls for thresholds, rectangle size, and movement
+
+Keyboard Controls:
+- q/w : Decrease/Increase low threshold
+- a/s : Decrease/Increase high threshold
+- r/e : Decrease/Increase rectangle width
+- f/t : Decrease/Increase rectangle height
+- i/j/k/l : Move rectangle up/left/down/right
+- m : Save rectangle crop as screenshot
+- g : Save wire template
+- p : Save full overlay screenshot
+- ESC : Exit
+
+Author: Affyief
+Date: 2025-09-11
+"""
+
 import numpy as np
 import cv2
 import threading
@@ -9,37 +42,39 @@ from scipy.interpolate import splprep, splev
 from scipy.spatial.distance import directed_hausdorff
 
 # ---------- Shared globals ----------
-basler_frame = None
-dvx_event_frame = None
-frame_lock = threading.Lock()
+basler_frame = None  # Latest frame from Basler camera
+dvx_event_frame = None  # Latest frame from DVX event camera
+frame_lock = threading.Lock()  # Thread-safe access to frames
 
-DVX_SERIAL = "DVXplorer_DXAS0024"
-screenshot_count = 0
-last_screenshot_msg = ""  # message for legend
-similarity_msg = ""       # similarity legend message
+DVX_SERIAL = "DVXplorer_DXAS0024"  # DVX camera serial number
+screenshot_count = 0  # Counter for saved screenshots
+last_screenshot_msg = ""  # Message to display in legend
+similarity_msg = ""  # Shape similarity message
 
-RESIZED_W, RESIZED_H = 940, 540
-ALPHA = 0.5  # overlay transparency
+RESIZED_W, RESIZED_H = 940, 540  # Resize dimensions for display
+ALPHA = 0.5  # Transparency factor for overlay
 
-# Homography for overlay
+# Homography matrix to warp DVX onto Basler frame
 H_resized = np.array([
     [7.81740620e-01, -7.77607070e-02, 1.59554279e+02],
     [-9.05046835e-04, 9.22111603e-01, 1.51813399e+01],
     [-4.14179057e-05, -1.45666882e-04, 1.00000000e+00]
 ])
 
+# Directory for wire templates
 TEMPLATE_DIR = "wire_templates"
 os.makedirs(TEMPLATE_DIR, exist_ok=True)
 TEMPLATE_PATH = os.path.join(TEMPLATE_DIR, "wire_template1.npy")
 
-flash_state = True  # global toggle for flashing
-flash_counter = 0
+flash_state = True  # Toggle for flashing overlay
+flash_counter = 0  # Counter for flashing
 
-WIRE_THICKNESS = 8  # approximate thickness of the wire in pixels
-SPLINE_POINTS = 100  # reduce points to avoid noise intersections
+WIRE_THICKNESS = 8  # Approximate wire thickness in pixels
+SPLINE_POINTS = 100  # Number of spline points for interpolation
 
-# ---------------- Basler ----------------
+# ---------------- Basler Camera ----------------
 def init_basler():
+    """Initialize Basler camera and return camera and converter objects."""
     factory = pylon.TlFactory.GetInstance()
     devices = factory.EnumerateDevices()
     if not devices:
@@ -56,6 +91,7 @@ def init_basler():
     return cam, conv
 
 def basler_worker(cam, conv):
+    """Continuously grab frames from Basler camera."""
     global basler_frame
     while cam.IsGrabbing():
         res = cam.RetrieveResult(1000, pylon.TimeoutHandling_ThrowException)
@@ -65,8 +101,9 @@ def basler_worker(cam, conv):
                 basler_frame = gray.copy()
         res.Release()
 
-# ---------------- DVX ----------------
+# ---------------- DVX Camera ----------------
 def init_dvx():
+    """Initialize DVX camera and visualizer."""
     cam = dv.io.CameraCapture(DVX_SERIAL)
     res = cam.getEventResolution()
     vis = dv.visualization.EventVisualizer(res)
@@ -76,6 +113,7 @@ def init_dvx():
     return cam, vis
 
 def dvx_worker(cam, vis):
+    """Continuously grab events from DVX camera and generate images."""
     global dvx_event_frame
     while True:
         if not cam.isEventStreamAvailable():
@@ -92,6 +130,7 @@ def dvx_worker(cam, vis):
 
 # ---------------- Overlay ----------------
 def overlay_dvx_on_basler_resized(b_frame, d_frame):
+    """Overlay DVX image onto resized Basler frame with transparency."""
     if b_frame is None:
         b_frame = np.zeros((RESIZED_H, RESIZED_W), dtype=np.uint8)
     if d_frame is None:
@@ -105,8 +144,9 @@ def overlay_dvx_on_basler_resized(b_frame, d_frame):
     overlay = cv2.addWeighted(b_color, 1-ALPHA, d_color, ALPHA, 0)
     return overlay
 
-# ---------------- Wire detection ----------------
+# ---------------- Wire Detection ----------------
 def detect_wire(masked_gray):
+    """Detect wire in masked grayscale image using contours and spline."""
     blurred = cv2.GaussianBlur(masked_gray, (5, 5), 0)
     edges = cv2.Canny(blurred, 50, 150)
     contours, _ = cv2.findContours(edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
@@ -127,6 +167,7 @@ def detect_wire(masked_gray):
         return None, None, None
 
 def draw_wire(img, wire_pts, x_spline, y_spline):
+    """Draw detected wire points and spline; highlight intersections."""
     # Draw wire points
     if wire_pts is not None:
         for pt in wire_pts:
@@ -143,9 +184,9 @@ def draw_wire(img, wire_pts, x_spline, y_spline):
             cv2.circle(img, intersections, 15, (0,0,255), 3)  # big red circle
     return img
 
-# ---------------- Intersection detection ----------------
+# ---------------- Intersection Detection ----------------
 def find_largest_spline_intersection(x, y, thickness):
-    # Check all segment pairs for proximity
+    """Find largest intersection in spline segments."""
     max_dist = 0
     intersection_point = None
     for i in range(len(x)-1):
@@ -153,7 +194,6 @@ def find_largest_spline_intersection(x, y, thickness):
             pt = segment_proximity_intersection((x[i], y[i]), (x[i+1], y[i+1]),
                                                 (x[j], y[j]), (x[j+1], y[j+1]), thickness)
             if pt is not None:
-                # Use distance between segments as “size” metric
                 d = np.hypot(pt[0]-x[i], pt[1]-y[i])
                 if d > max_dist:
                     max_dist = d
@@ -161,13 +201,11 @@ def find_largest_spline_intersection(x, y, thickness):
     return intersection_point
 
 def segment_proximity_intersection(p1, p2, q1, q2, threshold):
-    # Check if segments come within threshold
+    """Check if two line segments are within a threshold and return approximate intersection."""
     def dist2_segments(a1,a2,b1,b2):
-        # Minimum distance between 2 segments
         a1 = np.array(a1); a2 = np.array(a2)
         b1 = np.array(b1); b2 = np.array(b2)
         def seg_dist(p,r,q,s):
-            # Compute closest points distance
             u = r-p
             v = s-q
             w0 = p-q
@@ -190,26 +228,26 @@ def segment_proximity_intersection(p1, p2, q1, q2, threshold):
         return seg_dist(a1,a2,b1,b2)
     d = dist2_segments(p1,p2,q1,q2)
     if d <= threshold:
-        # Approx intersection point
         return (int((p1[0]+p2[0]+q1[0]+q2[0])/4),
                 int((p1[1]+p2[1]+q1[1]+q2[1])/4))
     return None
 
 # ---------------- Similarity ----------------
 def compute_similarity(x_new, y_new, template):
+    """Compute shape similarity to template using directed Hausdorff distance."""
     if template is None:
         return None
     curve = np.column_stack([x_new, y_new])
     d1 = directed_hausdorff(curve, template)[0]
     d2 = directed_hausdorff(template, curve)[0]
     dist = max(d1, d2)
-    # normalize distance relative to image size
     norm_dist = dist / np.hypot(RESIZED_W, RESIZED_H)
     similarity = max(0, 100 * (1 - norm_dist))
     return round(similarity, 1)
 
-# ---------------- Mask with rectangle ----------------
+# ---------------- Mask with Rectangle ----------------
 def intensity_mask_rectangle(frame, low, high, rect_w, rect_h, rect_cx, rect_cy, msg=""):
+    """Create intensity mask using rectangle; detect and draw wire."""
     global similarity_msg, flash_state, flash_counter
     if frame is None:
         return np.zeros((RESIZED_H, RESIZED_W, 3), dtype=np.uint8)
@@ -243,7 +281,7 @@ def intensity_mask_rectangle(frame, low, high, rect_w, rect_h, rect_cx, rect_cy,
             # Layout status
             if sim >= 90:
                 flash_counter += 1
-                if flash_counter % 5 == 0:  # toggle every 20 frames
+                if flash_counter % 5 == 0:  # toggle every 5 frames
                     flash_state = not flash_state
                 if flash_state:
                     cv2.putText(mask_color, "CORRECT LAYOUT", (400, 40),
@@ -256,7 +294,7 @@ def intensity_mask_rectangle(frame, low, high, rect_w, rect_h, rect_cx, rect_cy,
     else:
         similarity_msg = "No wire detected"
 
-    # Legend
+    # Legend display
     legend_lines = [
         "Low threshold: q/w",
         "High threshold: a/s",
@@ -274,6 +312,7 @@ def intensity_mask_rectangle(frame, low, high, rect_w, rect_h, rect_cx, rect_cy,
 
 # ---------------- Screenshot ----------------
 def save_screenshot(img, name_prefix="overlay"):
+    """Save screenshot of given image with counter."""
     global screenshot_count, last_screenshot_msg
     os.makedirs("screenshots", exist_ok=True)
     path = f"screenshots/{name_prefix}_{screenshot_count:03d}.png"
@@ -282,8 +321,9 @@ def save_screenshot(img, name_prefix="overlay"):
     print(f"[INFO] {last_screenshot_msg}")
     screenshot_count += 1
 
-# ---------------- Main ----------------
+# ---------------- Main Loop ----------------
 def main():
+    """Main application loop for capturing, overlay, wire detection, and display."""
     global basler_frame, dvx_event_frame, last_screenshot_msg
 
     bas_cam, bas_conv = init_basler()
