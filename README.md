@@ -1,4 +1,5 @@
-<img width="800" height="450" alt="image" src="https://github.com/user-attachments/assets/e787424c-8fb5-4be2-98c0-eec4ed920f2a" />
+![ezgif-7f6b9b4e4c7d57](https://github.com/user-attachments/assets/124b19ae-de76-40ba-a448-d71e75157342)
+
 <img width="1920" height="1080" alt="Screenshot from 2025-09-25 14-41-03" src="https://github.com/user-attachments/assets/dbf83941-b129-4cf6-81cd-7d64adb4d20b" />
 
 **Low-Latency Multimodal Perception for Robotic Assembly and Real-Time Inspection of Automotive Wiring Systems using Frame-Based and Event-Based Vision**
