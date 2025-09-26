@@ -1,0 +1,55 @@
+# Python bytecode and cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution/build
+build/
+dist/
+*.egg-info/
+.eggs/
+*.egg
+
+# Virtual environments
+venv/
+ENV/
+env/
+env.bak/
+venv.bak/
+
+# IDEs
+.idea/
+.vscode/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Test & coverage
+.tox/
+.pytest_cache/
+.coverage
+nosetests.xml
+coverage.xml
+
+# Data and sample outputs - ADJUSTED for your code
+screenshots/
+wire_templates/
+*.png
+*.npy
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Logs/output
+*.log
+*.out
+
+# Misc
+*.swp
+*.swo
+*.bak
+*~
