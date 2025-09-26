@@ -25,7 +25,7 @@ The system combines **AprilTag-based motion ROI detection**, **homography calibr
 - Python 3.8+
 - [Basler Pylon SDK](https://www.baslerweb.com/en/products/software/basler-pylon-camera-software-suite/)  
 - [DVXplorer SDK](https://inivation.com/support/software/)  
-
+---
 
 **Core dependencies:**
 - opencv-python
@@ -34,6 +34,7 @@ The system combines **AprilTag-based motion ROI detection**, **homography calibr
 - pypylon (Basler)
 - dv-processing (DVXplorer)
 - pupil-apriltags
+---
 
 **Keyboard Shortcuts (wire detection window)**
 - ESC → exit
@@ -44,17 +45,17 @@ The system combines **AprilTag-based motion ROI detection**, **homography calibr
 - r/e → decrease/increase ROI width
 - f/t → decrease/increase ROI height
 - i/j/k/l → move ROI rectangle (up/left/down/right)
+---
 
 **Example Output**
 <img width="1920" height="1080" alt="Screenshot from 2025-09-17 15-59-26" src="https://github.com/user-attachments/assets/962e35b1-b202-4db6-ac96-678bb1082214" />
 <img width="1920" height="1080" alt="Screenshot from 2025-09-22 11-39-03" src="https://github.com/user-attachments/assets/de32bea7-a694-46f8-8322-ea059e7f15eb" />
 <img width="1920" height="1080" alt="Screenshot from 2025-09-22 11-41-13" src="https://github.com/user-attachments/assets/3c0941d5-61bd-4c93-8563-e85064289359" />
-
-
-
+---
 
 **License**
 This project is licensed under the MIT License. See LICENSE for details.
+---
 
 **Acknowledgements**
 - Basler Pylon SDK
