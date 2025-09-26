@@ -1,5 +1,5 @@
 """
-Wire Detection Overlay System
+Wire Detection 
 
 This script integrates a Basler camera and a DVXplorer event camera to detect
 and visualize wires in real-time. It overlays DVX events onto Basler frames,
