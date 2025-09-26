@@ -48,17 +48,12 @@ Projectkarbeit/
 └── README.md # (this file)
 
 
-## Installation
 
-### Requirements
+**Requirements**
 - Python 3.8+
 - [Basler Pylon SDK](https://www.baslerweb.com/en/products/software/basler-pylon-camera-software-suite/)  
 - [DVXplorer SDK](https://inivation.com/support/software/)  
 
-### Python Dependencies
-Install via pip:
-```bash
-pip install -r requirements.txt
 
 **Core dependencies:**
 opencv-python
@@ -78,7 +73,7 @@ r/e → decrease/increase ROI width
 f/t → decrease/increase ROI height
 i/j/k/l → move ROI rectangle (up/left/down/right)
 
-*Example Output*
+**Example Output**
 <img width="1920" height="1080" alt="Screenshot from 2025-09-25 14-41-03" src="https://github.com/user-attachments/assets/a6ab5144-d4d9-4165-9347-e111a95c5062" />
 
 
