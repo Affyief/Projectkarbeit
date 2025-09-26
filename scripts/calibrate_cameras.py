@@ -8,7 +8,7 @@ This script:
 4. Warps the DVX image and overlays with the Basler.
 5. Displays both original and aligned overlays, along with feature matches.
 
-Author: FAPS
+Author: Affyief
 Date: 2025-09-11
 """
 
