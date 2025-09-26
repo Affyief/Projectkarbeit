@@ -84,9 +84,8 @@ Projectkarbeit/
 This project is licensed under the MIT License. See LICENSE for details.
 
 **Acknowledgements**
-Basler Pylon SDK
-iniVation DVXplorer SDK
-pupil-apriltags
-OpenCV community
-[FAU-FAPS
-](https://github.com/FAU-FAPS)
+- Basler Pylon SDK
+- iniVation DVXplorer SDK
+- pupil-apriltags
+ -OpenCV community
+- [FAU-FAPS](https://github.com/FAU-FAPS)
