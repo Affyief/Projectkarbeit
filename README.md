@@ -21,34 +21,6 @@ The system combines **AprilTag-based motion ROI detection**, **homography calibr
 
 ---
 
-## Repository Structure
-
-Projectkarbeit/
-│
-├── src/ # core modules
-│ ├── cameras/ # camera drivers (Basler, DVX)
-│ ├── calibration/ # homography estimation
-│ ├── detection/ # AprilTag motion & wire detection
-│ ├── visualization/ # overlay, labeling, display
-│ ├── utils/ # IO, geometry helpers
-│ └── main.py # orchestrator (dual-camera pipeline)
-│
-├── scripts/ # runnable entry points
-│ ├── run_dual_camera.py # full pipeline (Basler + DVX + wire detection)
-│ ├── april_motion_demo.py # AprilTag + motion ROI
-│ └── homography_demo.py # offline homography alignment
-│
-├── docs/ # documentation
-│ ├── INSTALL.md # detailed install instructions
-│ ├── USAGE.md # how to run scripts & shortcuts
-│ └── ARCHITECTURE.md # system description
-│
-├── requirements.txt # dependencies
-├── LICENSE
-└── README.md # (this file)
-
-
-
 **Requirements**
 - Python 3.8+
 - [Basler Pylon SDK](https://www.baslerweb.com/en/products/software/basler-pylon-camera-software-suite/)  
