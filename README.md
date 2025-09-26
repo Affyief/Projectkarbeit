@@ -75,7 +75,8 @@ If you use this project in your research, please cite:
 ```bibtex
 @projekt{chaudhry2025lowlatency,
   title = {Low-Latency Multimodal Perception for Robotic Assembly and Real-Time Inspection of Automotive Wiring Systems using Frame-Based and Event-Based Vision},
-  author = {Chaudhry, Affyief and Hartmann, Annalena},
+  author = {Chaudhry, Affyief},
+  supervisor = {Hartmann, Annalena},
   institution = {FAU-FAPS},
   year = {2025},
   note = {Project Arbeit},
